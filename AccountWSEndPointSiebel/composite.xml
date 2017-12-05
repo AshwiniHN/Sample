@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<composite name="AccountWSEndPointSiebel" revision="4.0" mode="active" state="on" xmlns="http://xmlns.oracle.com/sca/1.0" xmlns:ui="http://xmlns.oracle.com/soa/designer/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <import location="AccountWSEndPointSiebel.wsdl" namespace="http://xmlns.oracle.com/AccountWSEndPointSiebel"/>
+   <import namespace="http://siebel.com/CustomUI" location="oramds:/apps/WSDL/ISG_SF_Account_Service.wsdl" importType="wsdl"/>
+   <import namespace="http://siebel.com/CustomUI" location="ISG_SF_Account_ServiceWrapper.wsdl" importType="wsdl"/>
+   <service ui:wsdlLocation="AccountWSEndPointSiebel.wsdl" name="client">
+      <interface.wsdl interface="http://xmlns.oracle.com/AccountWSEndPointSiebel#wsdl.interface(AccountWSEndPointSiebel)" xmlns:ns="http://xmlns.oracle.com/sca/1.0"/>
+      <binding.ws port="http://xmlns.oracle.com/AccountWSEndPointSiebel#wsdl.endpoint(AccountWSEndPointSiebel/AccountWSEndPointSiebel)" xmlns:ns="http://xmlns.oracle.com/sca/1.0"/>
+   </service>
+   <property name="AccountWSEndPointSiebel" type="xs:string" many="false">11.1.1.7.0</property>
+   <property name="originalProductVersion" type="xs:string" many="false">11.0.0.0.0</property>
+   <property name="productVersion" type="xs:string" many="false">12.1.3.0.0</property>
+   <property name="compositeID" type="xs:string" many="false">f00a0663-cf9e-4924-9cd9-e48fac1984a0</property>
+   <component name="AccountWSEndPointSiebel" version="1.1">
+      <implementation.bpel src="AccountWSEndPointSiebel.bpel"/>
+      <componentType xmlns="http://xmlns.oracle.com/sca/1.0" xmlns:ui="http://xmlns.oracle.com/soa/designer/">
+         <service ui:wsdlLocation="AccountWSEndPointSiebel.wsdl" name="client">
+            <interface.wsdl interface="http://xmlns.oracle.com/AccountWSEndPointSiebel#wsdl.interface(AccountWSEndPointSiebel)"/>
+         </service>
+         <reference name="ISG_Account_Service" ui:wsdlLocation="oramds:/apps/WSDL/ISG_SF_Account_Service.wsdl">
+            <interface.wsdl interface="http://siebel.com/CustomUI#wsdl.interface(SFAccountSync)"/>
+         </reference>
+      </componentType>
+   </component>
+   <reference name="ISG_Account_Service"
+              ui:wsdlLocation="oramds:/apps/WSDL/ISG_SF_Account_Service.wsdl">
+      <interface.wsdl interface="http://siebel.com/CustomUI#wsdl.interface(SFAccountSync)"/>
+      <binding.ws port="http://siebel.com/CustomUI#wsdl.endpoint(ISG_SF_Account_Service/SFAccountSync)"
+                  location="oramds:/apps/WSDL/ISG_SF_Account_Service.wsdl"
+                  soapVersion="1.1">
+         <property name="weblogic.wsee.wsat.transaction.flowOption"
+                   type="xs:string" many="false">WSDLDriven</property>
+      </binding.ws>
+   </reference>
+   <wire>
+      <source.uri>client</source.uri>
+      <target.uri>AccountWSEndPointSiebel/client</target.uri>
+   </wire>
+   <wire>
+      <source.uri>AccountWSEndPointSiebel/ISG_Account_Service</source.uri>
+      <target.uri>ISG_Account_Service</target.uri>
+   </wire>
+</composite>

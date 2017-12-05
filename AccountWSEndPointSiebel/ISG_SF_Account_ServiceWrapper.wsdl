@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions targetNamespace="http://siebel.com/CustomUI" xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://siebel.com/CustomUI" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <plnk:partnerLinkType name="ISG_Account_Service">
+      <plnk:role name="SFAccountSync">
+         <plnk:portType name="tns:SFAccountSync"/>
+      </plnk:role>
+   </plnk:partnerLinkType>
+  <wsdl:import namespace="http://siebel.com/CustomUI" location="oramds:/apps/WSDL/ISG_SF_Account_Service.wsdl"/>
+</wsdl:definitions>

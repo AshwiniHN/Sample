@@ -1,0 +1,133 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>FuzzySearch.mplan</file>
+      <name>FuzzySearch.mplan</name>
+      <fix/>
+      <msg>Operation\Event "SearchForAccountWithAccountGroupfrom_Golden" does not contain case. No operation\event will be executed\processed respectively.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>FuzzySearch.mplan</file>
+      <name>FuzzySearch.mplan</name>
+      <fix/>
+      <msg>Operation\Event "SearchForAccountBestMatch_Golden" does not contain case. No operation\event will be executed\processed respectively.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>FuzzySearch.mplan</file>
+      <name>FuzzySearch.mplan</name>
+      <fix/>
+      <msg>Operation\Event "SearchForAccountWithGroupBestMatch_Golden" does not contain case. No operation\event will be executed\processed respectively.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>FuzzySearch.mplan</file>
+      <name>FuzzySearch.mplan</name>
+      <fix/>
+      <msg>Operation\Event "SearchForAccountfrom_XREF" does not contain case. No operation\event will be executed\processed respectively.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>FuzzySearch.mplan</file>
+      <name>FuzzySearch.mplan</name>
+      <fix/>
+      <msg>Operation\Event "SearchForAccountWithAccountGroupfrom_XREF" does not contain case. No operation\event will be executed\processed respectively.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>FuzzySearch.mplan</file>
+      <name>FuzzySearch.mplan</name>
+      <fix/>
+      <msg>Operation\Event "SearchForAccountBestMatch_XREF" does not contain case. No operation\event will be executed\processed respectively.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>FuzzySearch.mplan</file>
+      <name>FuzzySearch.mplan</name>
+      <fix/>
+      <msg>Operation\Event "SearchForAccountWithGroupBestMatch_XREF" does not contain case. No operation\event will be executed\processed respectively.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>FuzzySearch.mplan</file>
+      <name>FuzzySearch.mplan</name>
+      <fix/>
+      <msg>Operation\Event "SearchforAccountwithPartyType" does not contain case. No operation\event will be executed\processed respectively.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>FuzzySearch.mplan</file>
+      <name>FuzzySearch.mplan</name>
+      <fix/>
+      <msg>Operation\Event "SearchforAccountwithPartyTypeBestMatchfrom_Golden" does not contain case. No operation\event will be executed\processed respectively.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>FuzzySearch.mplan</file>
+      <name>FuzzySearch.mplan</name>
+      <fix/>
+      <msg>Operation\Event "SearchforAccountwithPartyTypeBestMatchfrom_XREF" does not contain case. No operation\event will be executed\processed respectively.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>FuzzySearch.mplan</file>
+      <name>FuzzySearch.mplan</name>
+      <fix/>
+      <msg>Operation\Event "SearchforAccountwithPartyTypefrom_Golden" does not contain case. No operation\event will be executed\processed respectively.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>FuzzySearch.mplan</file>
+      <name>FuzzySearch.mplan</name>
+      <fix/>
+      <msg>Operation\Event "SearchforAccountwithPartyTypefrom_XREF" does not contain case. No operation\event will be executed\processed respectively.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>FuzzySearch.mplan</file>
+      <name>FuzzySearch.mplan</name>
+      <fix/>
+      <msg>Operation\Event "SearchforAccountwithPartyTypeBestMatch" does not contain case. No operation\event will be executed\processed respectively.</msg>
+   </Fault>
+</Faults>

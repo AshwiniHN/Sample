@@ -1,0 +1,901 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Thu Dec 13 00:35:44 MST 2007
+   Copyright (c) 2008, 2008, Oracle and/or its affiliates. All rights reserved     
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="AccountWSEndPointSiebel" 
+targetNamespace="http://xmlns.oracle.com/AccountWSEndPointSiebel" 
+xmlns="http://schemas.xmlsoap.org/ws/2003/03/business-process/" 
+xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" 
+xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" 
+xmlns:ns4="http://schemas.xmlsoap.org/ws/2003/03/addressing" 
+xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" 
+xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" 
+xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+xmlns:ns5="http://www.siebel.com/xml/OP-OD%20Account/Id" 
+xmlns:client="http://xmlns.oracle.com/AccountWSEndPointSiebel" 
+xmlns:ns6="http://siebel.com/webservices" 
+xmlns:ora="http://schemas.oracle.com/xpath/extension" 
+xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" 
+xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" 
+xmlns:ns1="http://mcafee.com/asi" 
+xmlns:ehdr="http://www.oracle.com/XSL/Transform/java/oracle.tip.esb.server.headers.ESBHeaderFunctions"
+xmlns:ns3="http://www.siebel.com/xml/OP-OD%20Account/Query" 
+xmlns:ns2="http://www.siebel.com/xml/OP-OD%20Account/Data" 
+xmlns:bpelx="http://schemas.oracle.com/bpel/extension" 
+xmlns:orcl="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" 
+xmlns:ns8="http://mcafee.com/asi" 
+xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpel2="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns7="http://siebel.com/CustomUI"
+         xmlns:ns9="http://www.siebel.com/xml/ISGSFAccountIO/Query"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ns10="http://www.siebel.com/xml/ISGSFAccountIO/Data"
+         xmlns:aia="http://www.oracle.com/XSL/Transform/java/oracle.apps.aia.core.xpath.AIAFunctions"
+         xmlns:ns11="http://www.siebel.com/xml/ISGSFAccountIO/Id">
+  <bpelx:annotation>
+    <bpelx:analysis>
+      <bpelx:property name="wsdlFile">
+        <![CDATA[AccountWSEndPointSiebel.wsdl]]>
+      </bpelx:property>
+    </bpelx:analysis>
+  </bpelx:annotation>
+  <bpelx:exec import="java.net.*"/>
+<bpelx:exec import="java.io.*"/>
+<bpelx:exec import="java.util.*"/>
+<bpelx:exec import="java.lang.*"/>  
+<bpelx:exec import="oracle.xml.parser.v2.XMLElement"/>
+<bpelx:exec import="oracle.apps.aia.ods.CRMOnDemandHostMap"/>
+<bpelx:exec import="oracle.apps.siebel.sessionpool.SessionPool"/>
+  <!--    xmlns:ns7="http://mcafee.com/asi"
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="client" partnerLinkType="client:AccountWSEndPointSiebel" myRole="AccountWSEndPointSiebelProvider"/>
+
+    <partnerLink name="ISG_Account_Service"
+                 partnerLinkType="ns7:ISG_Account_Service"
+                 partnerRole="SFAccountSync"/>
+  </partnerLinks>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="inputVariable" messageType="client:AccountWSEndPointSiebelRequestMessage"/>
+    <variable name="outputVariable" messageType="client:AccountWSEndPointSiebelResponseMessage"/>
+   
+    <variable name="strOPOrganizationId" type="xsd:string"/>
+    <variable name="strOPUserId" type="xsd:string"/>
+    <variable name="strOPPwd" type="xsd:string"/>
+    <variable name="strWSEndPoint" type="xsd:string"/>
+  
+    <variable name="strUsernameTokenHeader"
+              messageType="ns7:UsernameTokenHeader"/>
+    <variable name="strPasswordTextHeader"
+              messageType="ns7:PasswordTextHeader"/>
+    <variable name="strSessionTypeHeader" messageType="ns7:SessionTypeHeader"/>
+    <variable name="strSessionTokenHeader" messageType="ns7:SessionTokenHeader"/>
+    <variable name="FaultVar" messageType="bpelx:RuntimeFaultMessage"/>
+    <variable name="strQueryPageSize" type="xsd:string"/>
+    <variable name="startRowNum" type="xsd:int"/>
+    <variable name="bLastPageFlag" type="xsd:boolean"/>
+   
+    <variable name="strOPSessionToken" type="xsd:string"/>
+    <variable name="iSessLoopCount" type="xsd:int"/>
+    <variable name="bStopLooping" type="xsd:boolean"/>
+    <variable name="strODHostID" type="xsd:string"/>
+    <variable name="sKey" type="xsd:string"/>
+    <variable name="sTitle" type="xsd:string"/>
+    <variable name="strOPWSEndpoint" type="xsd:string"/>
+    <variable name="strSiebelSession" type="xsd:string"/>
+  </variables>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+    <!-- Receive input from requestor. (Note: This maps to operation defined in AccountWSEndPointSiebel.wsdl) -->
+    <receive name="receiveInput" partnerLink="client" portType="client:AccountWSEndPointSiebel" operation="process" variable="inputVariable" createInstance="yes"/>
+    <!-- Generate reply to synchronous request -->
+    <!--  <switch name="AssignTitleAndKey">
+      <case condition="bpws:getVariableData('inputVariable','Headerrequest','/client:AccountWSEndPointSiebelProcessRequest/client:Operation') = &quot;QueryPage&quot; or bpws:getVariableData('inputVariable','Headerrequest','/client:AccountWSEndPointSiebelProcessRequest/client:Operation') = &quot;QueryIntersectionId&quot;">
+        <bpelx:annotation>
+          <bpelx:pattern patternName="case">Query</bpelx:pattern>
+        </bpelx:annotation>
+        <assign name="AssignTitleAndKey">
+          <copy>
+            <from variable="inputVariable" part="OPListOfAccountQuery"
+                  query="/ns3:ListOfOpOdAccount/ns3:Account/ns3:AccountId"/>
+            <to variable="sKey"/>
+          </copy>
+          <copy>
+            <from expression="concat(bpws:getVariableData('inputVariable','Headerrequest','/client:AccountWSEndPointSiebelProcessRequest/client:Operation'),' (',bpws:getVariableData('inputVariable','Headerrequest','/client:AccountWSEndPointSiebelProcessRequest/client:OPListOfAccountQuery','/ns3:ListOfOpOdAccount/ns3:Account/ns3:AccountId'),')')"/>
+            <to variable="sTitle"/>
+          </copy>
+        </assign>
+      </case>
+      <case condition="bpws:getVariableData('inputVariable','Headerrequest','/client:AccountWSEndPointSiebelProcessRequest/client:Operation') = &quot;Update&quot; or bpws:getVariableData('inputVariable','Headerrequest','/client:AccountWSEndPointSiebelProcessRequest/client:Operation') = &quot;Insert&quot;">
+        <bpelx:annotation>
+          <bpelx:pattern patternName="case">Insert or Update</bpelx:pattern>
+        </bpelx:annotation>
+        <assign name="AssignTitleAndKey">
+          <copy>
+            <from variable="inputVariable" part="OPListOfAccount"
+                  query="/ns2:ListOfOpOdAccount/ns2:Account/ns2:AccountId"/>
+            <to variable="sKey"/>
+          </copy>
+          <copy>
+            <from expression="concat(bpws:getVariableData('inputVariable','Headerrequest','/client:AccountWSEndPointSiebelProcessRequest/client:Operation'),' (',bpws:getVariableData('inputVariable','OPListOfAccount','/ns2:ListOfOpOdAccount/ns2:Account/ns2:AccountId'),')')"/>
+            <to variable="sTitle"/>
+          </copy>
+        </assign>
+      </case>
+      <otherwise/>
+    </switch>
+    <scope name="SetTitle_FromInput">
+      <sequence name="Sequence_SetTitleAndKey">
+        <bpelx:exec name="setTitleAndKey" language="java" version="1.5">
+          <![CDATA[setTitle((String)getVariableData("sTitle"));   
+setIndex(1,"Account");   
+setIndex(2,(String)getVariableData("sKey"));]]>
+        </bpelx:exec>
+      </sequence>
+    </scope>
+    -->
+    <assign name="InitializeProcess">
+      <copy>
+        <from expression="''"/>
+        <to variable="strOPSessionToken"/>
+      </copy>
+      <copy>
+        <from variable="inputVariable" part="Headerrequest"
+              query="/client:AccountWSEndPointSiebelProcessRequest/client:OrgId"/>
+        <to variable="strOPOrganizationId"/>
+      </copy>
+      <copy>
+        <from expression="0"/>
+        <to variable="iSessLoopCount"/>
+      </copy>
+      <copy>
+        <from expression="boolean(0)"/>
+        <to variable="bStopLooping"/>
+      </copy>
+      <copy>
+        <from expression="''"/>
+        <to variable="strODHostID"/>
+      </copy>
+    </assign>
+    <switch name="CheckCallerIdExistence">
+      <case condition="string-length(bpws:getVariableData('inputVariable','Headerrequest','/client:AccountWSEndPointSiebelProcessRequest/client:callerId')) = 0">
+        <bpelx:annotation>
+          <bpelx:pattern>Caller ID Present</bpelx:pattern>
+        </bpelx:annotation>
+        <sequence name="Sequence_2">
+          <assign name="LogError">
+            <copy>
+              <from expression="'Caller Id Cannot Be Empty'"/>
+               <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:ErrMsg"/>
+            </copy>
+            <copy>
+              <from expression="'Failed'"/>
+               <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:Status"/>
+            </copy>
+          </assign>
+          <reply name="ReplyError" partnerLink="client" portType="client:AccountWSEndPointSiebel" operation="process" variable="outputVariable"/>
+        </sequence>
+      </case>
+      <otherwise>
+        <empty name="Empty4"/>
+      </otherwise>
+    </switch>
+    <switch name="CheckOrgIdExistence">
+      <case condition="string-length(bpws:getVariableData('inputVariable','Headerrequest','/client:AccountWSEndPointSiebelProcessRequest/client:OrgId')) > 0">
+        <bpelx:annotation>
+          <bpelx:pattern>Org Id Exists</bpelx:pattern>
+        </bpelx:annotation>
+    <!-- siva    <bpelx:exec name="GetWSEndPoint" language="java" version="1.5">
+          <![CDATA[//Defining local variables              
+String strWSEndPoint="";                            
+String strOPUsername="";                     
+String strOPUserpassword="";                     
+String strODHostId="";                    
+String strOPOrgId="";                  
+              
+//Obtaining the value for the OP Organization Id      
+strOPOrgId=(String) getVariableData("strOPOrganizationId");      
+          
+o//***************************************************************************************              
+//We will now obtain the WSEndPoint URL, username and password for the concerned OD Host.              
+//**************************************************************************************              
+              
+CRMOnDemandHostMap objCRMOnDemandHostMap = new CRMOnDemandHostMap();                            
+                            
+if (objCRMOnDemandHostMap != null)                            
+{                            
+   strODHostId = objCRMOnDemandHostMap.getOPOrgIDMapping(strOPOrgId);                   
+   setVariableData("strODHostID",new String(strODHostId));               
+   strWSEndPoint = objCRMOnDemandHostMap.getOPEndpointURL(strODHostId);                           
+   setVariableData("strOPWSEndpoint",new String(strWSEndPoint));                       
+                        
+ /*  strOPUsername = objCRMOnDemandHostMap.getOPUsername(strODHostId);                     
+   setVariableData("strOPUsername",new String(strOPUsername));                     
+                        
+   strOPUserpassword = objCRMOnDemandHostMap.getOPPassword(strODHostId);                     
+   setVariableData("strOPUserPassword",new String(strOPUserpassword));        
+   SessionPool objSessionPool = new SessionPool();              
+  if (objSessionPool != null)                  
+  {              
+      String strSessToken   = objSessionPool.GetSession (strODHostId);              
+      if(strSessToken!= null && strSessToken.trim().length() > 0)         
+      {         
+          setVariableData("strSiebelSession",new String(strSessToken));            
+      }         
+  }   */       
+}]]>
+        </bpelx:exec> -->
+        <sequence name="Sequence1">
+          <scope name="Scope1">
+            <faultHandlers>
+              <catchAll>
+                <empty name="Empty1"/>
+              </catchAll>
+            </faultHandlers>
+            <bpelx:exec name="GetWSEndPointDetails" language="java"
+                        version="1.5">
+              <![CDATA[//Defining local variables              
+String strWSEndPoint="";                            
+String strOPUsername="";                     
+String strOPUserpassword="";                     
+String strODHostId="";                    
+String strOPOrgId="";                  
+              
+//Obtaining the value for the OP Organization Id                  
+strOPOrgId=(String) getVariableData("strOPOrganizationId");                  
+                      
+//***************************************************************************************              
+//We will now obtain the WSEndPoint URL, username and password for the concerned OD Host.              
+//**************************************************************************************              
+              
+oracle.apps.aia.ods.CRMOnDemandHostMap objCRMOnDemandHostMap = new oracle.apps.aia.ods.CRMOnDemandHostMap();                            
+                         
+if (objCRMOnDemandHostMap != null)                            
+{                            
+   strODHostId = objCRMOnDemandHostMap.getOPOrgIDMapping(strOPOrgId);                   
+   setVariableData("strODHostID",new String(strODHostId));               
+   strWSEndPoint = objCRMOnDemandHostMap.getOPEndpointURL(strODHostId);                           
+   setVariableData("strOPWSEndpoint",new String(strWSEndPoint));                       
+  // System.out.println("Endpoint is  in Account "+strOPWSEndpoint);       
+  // System.out.println("ODHOST is  in Account "+strODHostID);  
+   
+} 
+]]>
+            </bpelx:exec>
+          </scope>
+        </sequence>
+      </case>
+      <otherwise>
+        <sequence name="Sequence_1">
+          <assign name="LogError">
+            <copy>
+              <from expression="'Org Id Cannot Be Empty'"/>
+               <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:ErrMsg"/>
+            </copy>
+            <copy>
+              <from expression="'Failed'"/>
+               <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:Status"/>
+            </copy>
+          </assign>
+          <reply name="ReplyError" partnerLink="client" portType="client:AccountWSEndPointSiebel" operation="process" variable="outputVariable"/>
+        </sequence>
+      </otherwise>
+    </switch>
+     <!-- siva  <scope name="Scope_1">
+      <faultHandlers>
+        <catchAll>
+          <empty name="Empty_1"/>
+        </catchAll>
+      </faultHandlers>
+   <bpelx:exec name="GetOPSessionToken" language="java" version="1.5">
+        <![CDATA[SessionPool objSessionPool = new SessionPool();      
+if (objSessionPool != null)          
+{      
+   String sODHostId      = (String) getVariableData ("strODHostId");     
+   String strSessToken   = objSessionPool.GetSession (sODHostId);      
+   setVariableData("strOPSessionToken",new String(strSessToken));      
+}]]>
+      </bpelx:exec> 
+    </scope> -->
+    
+      <scope name="Scope_1">
+      <faultHandlers>
+        <catchAll>
+          <empty name="Empty_1"/>
+        </catchAll>
+      </faultHandlers>
+      <bpelx:exec name="GetOPSessionToken" language="java" version="1.5">
+        <![CDATA[oracle.apps.siebel.sessionpool.SessionPool objSessionPool = new oracle.apps.siebel.sessionpool.SessionPool();          
+if (objSessionPool != null)              
+{          
+   String sODHostId      = (String) getVariableData ("strODHostID");         
+   String strSessToken   = objSessionPool.GetSession (sODHostId);          
+   setVariableData("strSiebelSession",new String(strSessToken));    
+  // System.out.println("strSiebelSession is  in Account "+strSiebelSession);
+  // addAuditTrailEntry("strSiebelSession is "+strSiebelSession);  
+}]]>
+      </bpelx:exec>
+    </scope>
+    
+    <while name="While_2" condition="bpws:getVariableData('bStopLooping') = boolean(0)">
+      <sequence name="Sequence_6">
+        <assign name="SetSessionToken">
+          <copy>
+            <from expression="'Stateless'"/>
+            <to variable="strSessionTypeHeader" part="SessionTypeHeader"
+                query="/ns6:SessionType"/>
+          </copy>
+          <copy>
+            <from variable="strSiebelSession"/>
+            <to variable="strSessionTokenHeader" part="SessionTokenHeader"/>
+          </copy>
+      <!--    <copy>
+            <from expression="'http://insightstgweb4.corp.nai.org/eai_opod_enu/start.swe?SWEExtSource=CustomUI&amp;amp;SWEExtCmd=Execute&amp;amp;WSSOAP=1'"/>
+            <to variable="strOPWSEndpoint"/>
+          </copy> -->
+        </assign>
+        <scope name="Call_Account_WS">
+          <variables>
+            <variable name="Var_clone_Account_query"
+                      element="ns9:ListOfIsgsfaccountio"/>
+            <variable name="Invoke_QueryPage_queryACNT_InputVariable"
+                      messageType="ns7:queryACNT_Input"/>
+            <variable name="Invoke_QueryPage_queryACNT_OutputVariable"
+                      messageType="ns7:queryACNT_Output"/>
+            <variable name="Invoke_accountUpdate_updateACNT_InputVariable"
+                      messageType="ns7:updateACNT_Input"/>
+            <variable name="Invoke_accountUpdate_updateACNT_OutputVariable"
+                      messageType="ns7:updateACNT_Output"/>
+            <variable name="Invoke_ISG_Account_Service_insertACNT_InputVariable"
+                      messageType="ns7:insertACNT_Input"/>
+            <variable name="Invoke_ISG_Account_Service_insertACNT_OutputVariable"
+                      messageType="ns7:insertACNT_Output"/>
+            <variable name="Var_InsertAccountClone"
+                      element="ns10:ListOfIsgsfaccountio"/>
+            <variable name="Var_UpdateAccountClone"
+                      element="ns10:ListOfIsgsfaccountio"/>
+          </variables>
+          <faultHandlers>
+            <catch faultName="bpelx:bindingFault" faultVariable="FaultVar">
+              <assign name="LogError">
+                <copy>
+                  <from expression="'Failed'"/>
+                   <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:Status"/>
+                </copy>
+                <copy>
+                  <from variable="FaultVar" part="summary"/>
+                   <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:ErrMsg"/>
+                </copy>
+              </assign>
+            </catch>
+            <catch faultName="bpelx:remoteFault" faultVariable="FaultVar">
+              <assign name="LogError">
+                <copy>
+                  <from expression="'Failed'"/>
+                   <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:Status"/>
+                </copy>
+                <copy>
+                  <from variable="FaultVar" part="summary"/>
+                   <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:ErrMsg"/>
+                </copy>
+              </assign>
+            </catch>
+            <catchAll>
+              <empty name="DoNothing"/>
+            </catchAll>
+          </faultHandlers>
+          <switch name="CheckOperationType">
+            <case condition="bpws:getVariableData('inputVariable','Headerrequest','/client:AccountWSEndPointSiebelProcessRequest/client:Operation')='Execute'">
+              <scope name="Scope2">
+                <variables>
+                  <variable name="ISG_Account_Service_executeACNT_InputVariable"
+                            messageType="ns7:executeACNT_Input"/>
+                  <variable name="ISG_Account_Service_executeACNT_OutputVariable"
+                            messageType="ns7:executeACNT_Output"/>
+                </variables>
+                <sequence name="Sequence4">
+                  <assign name="setInsertInput">
+                    <copy>
+                      <from expression="'LIC'"/>
+                      <to variable="ISG_Account_Service_executeACNT_InputVariable"
+                          part="executeACNT_Input"
+                          query="/ns7:executeACNT_Input/ns7:LOVLanguageMode"/>
+                    </copy>
+                    <copy>
+                      <from expression="'All'"/>
+                      <to variable="ISG_Account_Service_executeACNT_InputVariable"
+                          part="executeACNT_Input"
+                          query="/ns7:executeACNT_Input/ns7:ViewMode"/>
+                    </copy>
+                    <bpelx:remove>
+                      <bpelx:target variable="ISG_Account_Service_executeACNT_InputVariable"
+                                    part="executeACNT_Input"
+                                    query="/ns7:executeACNT_Input/ns7:ExecutionMode"/>
+                    </bpelx:remove>
+                    <copy>
+                      <from variable="inputVariable" part="OPListOfAccount"
+                            query="/ns10:ListOfIsgsfaccountio"/>
+                      <to variable="ISG_Account_Service_executeACNT_InputVariable"
+                          part="executeACNT_Input"
+                          query="/ns7:executeACNT_Input/ns10:ListOfIsgsfaccountio"/>
+                    </copy>
+                  </assign>
+                  <switch name="Switch3">
+                    <case condition="bpws:getVariableData('inputVariable','Headerrequest','/client:AccountWSEndPointSiebelProcessRequest/client:OwnerId') != ''">
+                      <assign name="OwnerId">
+                        <copy>
+                          <from variable="inputVariable" part="Headerrequest" query="/client:AccountWSEndPointSiebelProcessRequest/client:OwnerId"/>
+                          <to variable="ISG_Account_Service_executeACNT_InputVariable"
+                              part="executeACNT_Input"
+                              query="/ns7:executeACNT_Input/ns7:OwnerId"/>
+                        </copy>
+                      </assign>
+                    </case>
+                    <otherwise>
+                      <scope name="Scope3">
+                        <faultHandlers>
+                          <catchAll>
+                            <empty name="DoNothing"/>
+                          </catchAll>
+                        </faultHandlers>
+                        <assign name="RemoveOwnerId">
+                          <bpelx:remove>
+                            <bpelx:target variable="ISG_Account_Service_executeACNT_InputVariable"
+                                          part="executeACNT_Input"
+                                          query="/ns7:executeACNT_Input/ns7:OwnerId"/>
+                          </bpelx:remove>
+                        </assign>
+                      </scope>
+                    </otherwise>
+                  </switch>
+                  <invoke name="Invoke_ISG_Account_Service"
+                          inputVariable="ISG_Account_Service_executeACNT_InputVariable"
+                          outputVariable="ISG_Account_Service_executeACNT_OutputVariable"
+                          partnerLink="ISG_Account_Service"
+                          portType="ns7:SFAccountSync" operation="executeACNT"
+                          bpelx:invokeAsDetail="no"
+                          bpelx:inputHeaderVariable="strSessionTokenHeader,strSessionTypeHeader">
+                    <bpelx:inputProperty name="endpointURI"
+                                         variable="strOPWSEndpoint"/>
+                  </invoke>
+                  <assign name="setInsertOutput">
+                    <copy>
+                      <from expression="'Success'"/>
+                       <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:Status"/>
+                    </copy>
+                    <copy>
+                      <from expression="''"/>
+                       <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:ErrMsg"/>
+                    </copy>
+                    <copy>
+                      <from variable="ISG_Account_Service_executeACNT_OutputVariable"
+                            part="executeACNT_Output"
+                            query="/ns7:executeACNT_Output/ns11:ListOfIsgsfaccountio"/>
+                      <to variable="outputVariable" part="OPListOfAccountOutput"
+                          query="/ns11:ListOfIsgsfaccountio"/>
+                    </copy>
+                  </assign>
+                </sequence>
+              </scope>
+            </case>
+            <case condition="bpws:getVariableData('inputVariable','Headerrequest','/client:AccountWSEndPointSiebelProcessRequest/client:Operation')='Insert'">
+              <bpelx:annotation>
+                <bpelx:general>
+                  <bpelx:property name="userLabel">
+                    <![CDATA[AccountInsert]]>
+                  </bpelx:property>
+                </bpelx:general>
+              </bpelx:annotation>
+              <sequence name="Sequence3">
+                <assign name="setInsertInput">
+                  <copy>
+                    <from variable="inputVariable" part="OPListOfAccount"
+                          query="/ns10:ListOfIsgsfaccountio"/>
+                    <to variable="Var_InsertAccountClone"
+                        query="/ns10:ListOfIsgsfaccountio"/>
+                  </copy>
+                  <copy>
+                    <from variable="Var_InsertAccountClone"
+                          query="/ns10:ListOfIsgsfaccountio"/>
+                    <to variable="Invoke_ISG_Account_Service_insertACNT_InputVariable"
+                        part="insertACNT_Input"
+                        query="/ns7:insertACNT_Input/ns10:ListOfIsgsfaccountio"/>
+                  </copy>
+                  <copy>
+                    <from expression="'LIC'"/>
+                    <to variable="Invoke_ISG_Account_Service_insertACNT_InputVariable"
+                        part="insertACNT_Input"
+                        query="/ns7:insertACNT_Input/ns7:LOVLanguageMode"/>
+                  </copy>
+                </assign>
+                <switch name="Switch2">
+                  <case condition="bpws:getVariableData('iSessLoopCount') &lt; 1">
+                    <bpelx:annotation>
+                      <bpelx:pattern>Remove ViewMode Tag Only Once</bpelx:pattern>
+                    </bpelx:annotation>
+                    <empty name="RemoveViewMode"/>
+                  </case>
+                  <otherwise>
+                    <empty name="Empty6"/>
+                  </otherwise>
+                </switch>
+                <invoke name="Invoke_ISG_Account_Service_Insert"
+                        inputVariable="Invoke_ISG_Account_Service_insertACNT_InputVariable"
+                        outputVariable="Invoke_ISG_Account_Service_insertACNT_OutputVariable"
+                        partnerLink="ISG_Account_Service"
+                        portType="ns7:SFAccountSync" operation="insertACNT"
+                        bpelx:invokeAsDetail="no"
+                        bpelx:inputHeaderVariable="strSessionTokenHeader,strSessionTypeHeader">
+                  <bpelx:inputProperty name="endpointURI"
+                                       variable="strOPWSEndpoint"/>
+                </invoke>
+                <assign name="setInsertOutput">
+                  <copy>
+                    <from expression="'Success'"/>
+                     <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:Status"/>
+                  </copy>
+                  <copy>
+                    <from expression="''"/>
+                     <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:ErrMsg"/>
+                  </copy>
+                  <copy>
+                    <from variable="Invoke_ISG_Account_Service_insertACNT_OutputVariable"
+                          part="insertACNT_Output"
+                          query="/ns7:insertACNT_Output/ns11:ListOfIsgsfaccountio"/>
+                    <to variable="outputVariable" part="OPListOfAccountOutput"
+                        query="/ns11:ListOfIsgsfaccountio"/>
+                  </copy>
+                </assign>
+              </sequence>
+            </case>
+            <case condition="bpws:getVariableData('inputVariable','Headerrequest','/client:AccountWSEndPointSiebelProcessRequest/client:Operation')='Update'">
+              <bpelx:annotation>
+                <bpelx:general>
+                  <bpelx:property name="userLabel">
+                    <![CDATA[AccountUpdate]]>
+                  </bpelx:property>
+                </bpelx:general>
+              </bpelx:annotation>
+              <sequence name="Sequence2">
+                <assign name="AssignUpdateInput">
+                  <copy>
+                    <from variable="inputVariable" part="OPListOfAccount"
+                          query="/ns10:ListOfIsgsfaccountio"/>
+                    <to variable="Var_UpdateAccountClone"
+                        query="/ns10:ListOfIsgsfaccountio"/>
+                  </copy>
+                  <copy>
+                    <from variable="Var_UpdateAccountClone"
+                          query="/ns10:ListOfIsgsfaccountio"/>
+                    <to variable="Invoke_accountUpdate_updateACNT_InputVariable"
+                        part="updateACNT_Input"
+                        query="/ns7:updateACNT_Input/ns10:ListOfIsgsfaccountio"/>
+                  </copy>
+                  <copy>
+                    <from expression="'LIC'"/>
+                    <to variable="Invoke_accountUpdate_updateACNT_InputVariable"
+                        part="updateACNT_Input"
+                        query="/ns7:updateACNT_Input/ns7:LOVLanguageMode"/>
+                  </copy>
+                </assign>
+                <switch name="Switch1">
+                  <case condition="bpws:getVariableData('iSessLoopCount') &lt; 1">
+                    <bpelx:annotation>
+                      <bpelx:pattern>Remove ViewMode Tag Only Once</bpelx:pattern>
+                    </bpelx:annotation>
+                    <empty name="RemoveViewMode"/>
+                  </case>
+                  <otherwise>
+                    <empty name="Empty7"/>
+                  </otherwise>
+                </switch>
+                <invoke name="Invoke_accountUpdate"
+                        inputVariable="Invoke_accountUpdate_updateACNT_InputVariable"
+                        outputVariable="Invoke_accountUpdate_updateACNT_OutputVariable"
+                        partnerLink="ISG_Account_Service"
+                        portType="ns7:SFAccountSync" operation="updateACNT"
+                        bpelx:invokeAsDetail="no"
+                        bpelx:inputHeaderVariable="strSessionTokenHeader,strSessionTypeHeader">
+                  <bpelx:inputProperty name="endpointURI"
+                                       variable="strOPWSEndpoint"/>
+                </invoke>
+                <assign name="setUpdateOutput">
+                  <copy>
+                    <from expression="'Success'"/>
+                     <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:Status"/>
+                  </copy>
+                  <copy>
+                    <from expression="''"/>
+                     <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:ErrMsg"/>
+                  </copy>
+                  <copy>
+                    <from variable="Invoke_accountUpdate_updateACNT_OutputVariable"
+                          part="updateACNT_Output"
+                          query="/ns7:updateACNT_Output/ns11:ListOfIsgsfaccountio"/>
+                    <to variable="outputVariable" part="OPListOfAccountOutput"
+                        query="/ns11:ListOfIsgsfaccountio"/>
+                  </copy>
+                </assign>
+              </sequence>
+            </case>
+            <case condition="bpws:getVariableData('inputVariable','Headerrequest','/client:AccountWSEndPointSiebelProcessRequest/client:Operation') = &quot;QueryPage&quot;">
+              <bpelx:annotation>
+                <bpelx:pattern>Operation=QueryPage</bpelx:pattern>
+                <bpelx:general>
+                  <bpelx:property name="userLabel">
+                    <![CDATA[AccountQuery]]>
+                  </bpelx:property>
+                </bpelx:general>
+              </bpelx:annotation>
+              <sequence name="Account_QueryPage">
+                <assign name="PopulateAccountQueryClone">
+                  <copy>
+                    <from expression="'100'"/>
+                    <to variable="strQueryPageSize"/>
+                  </copy>
+                  <copy>
+                    <from variable="inputVariable" part="Headerrequest"
+                          query="/client:AccountWSEndPointSiebelProcessRequest/client:AccountId"/>
+                    <to variable="Var_clone_Account_query"
+                        query="/ns9:ListOfIsgsfaccountio/ns9:Account/ns9:Id"/>
+                  </copy>
+                  <copy>
+                    <from expression="0"/>
+                    <to variable="startRowNum"/>
+                  </copy>
+                  <copy>
+                    <from variable="strQueryPageSize"/>
+                    <to variable="Var_clone_Account_query"
+                        query="/ns9:ListOfIsgsfaccountio/@pagesize"/>
+                  </copy>
+                  <copy>
+                    <from variable="startRowNum"/>
+                    <to variable="Var_clone_Account_query"
+                        query="/ns9:ListOfIsgsfaccountio/@startrownum"/>
+                  </copy>
+                </assign>
+                <switch name="CheckForEmptyAccountQueryElement">
+                  <case condition="bpws:getVariableData('inputVariable','Headerrequest','/client:AccountWSEndPointSiebelProcessRequest/client:AccountId')  &lt;=0">
+                    <bpelx:annotation>
+                      <bpelx:pattern>Account Id Not Found</bpelx:pattern>
+                    </bpelx:annotation>
+                    <sequence name="Sequence_3">
+                      <assign name="LogError">
+                        <copy>
+                          <from expression="'Error'"/>
+                           <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:Status"/>
+                        </copy>
+                        <copy>
+                          <from expression="'Query Page Input Contains Empty ListOfOpOdAccount Element'"/>
+                           <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:ErrMsg"/>
+                        </copy>
+                      </assign>
+                      <throw name="EmptyQueryPageInput" faultName="bpws:selectionFailure"/>
+                    </sequence>
+                  </case>
+                  <otherwise>
+                    <empty name="Empty8"/>
+                  </otherwise>
+                </switch>
+                <assign name="SetQueryPageInput">
+                  <copy>
+                    <from variable="Var_clone_Account_query"
+                          query="/ns9:ListOfIsgsfaccountio"/>
+                    <to variable="Invoke_QueryPage_queryACNT_InputVariable"
+                        part="queryACNT_Input"
+                        query="/ns7:queryACNT_Input/ns9:ListOfIsgsfaccountio"/>
+                  </copy>
+                  <copy>
+                    <from expression="'LIC'"/>
+                    <to variable="Invoke_QueryPage_queryACNT_InputVariable"
+                        part="queryACNT_Input"
+                        query="/ns7:queryACNT_Input/ns7:LOVLanguageMode"/>
+                  </copy>
+                
+                </assign>
+                <switch name="Switch_RemoveViewMode">
+                  <case condition="bpws:getVariableData('iSessLoopCount') &lt; 1">
+                    <bpelx:annotation>
+                      <bpelx:pattern>Remove ViewMode Tag Only Once</bpelx:pattern>
+                    </bpelx:annotation>
+                    <sequence name="Sequence_9">
+                      <scope name="Scope4">
+                        <faultHandlers>
+                          <catchAll>
+                            <empty name="Empty2"/>
+                          </catchAll>
+                        </faultHandlers>
+                        <assign name="RemoveViewMode">
+                          <bpelx:remove>
+                            <bpelx:target variable="Invoke_QueryPage_queryACNT_InputVariable"
+                                          part="queryACNT_Input"
+                                          query="/ns7:queryACNT_Input/ns7:ViewMode"/>
+                          </bpelx:remove>
+                        </assign>
+                      </scope>
+                    </sequence>
+                  </case>
+                  <otherwise>
+                    <empty name="Empty3"/>
+                  </otherwise>
+                </switch>
+                <invoke name="Invoke_QueryPage"
+                        inputVariable="Invoke_QueryPage_queryACNT_InputVariable"
+                        outputVariable="Invoke_QueryPage_queryACNT_OutputVariable"
+                        partnerLink="ISG_Account_Service"
+                        portType="ns7:SFAccountSync" operation="queryACNT"
+                        bpelx:invokeAsDetail="no"
+                        bpelx:inputHeaderVariable="strSessionTokenHeader,strSessionTypeHeader">
+                  <bpelx:inputProperty name="endpointURI"
+                                       variable="strOPWSEndpoint"/>
+                </invoke>
+                <assign name="SetQueryPageReturnValue">
+                  <bpelx:append>
+                    <bpelx:from variable="Invoke_QueryPage_queryACNT_OutputVariable"
+                                part="queryACNT_Output"
+                                query="/ns7:queryACNT_Output/ns10:ListOfIsgsfaccountio/ns10:Account"/>
+                    <bpelx:to variable="outputVariable"
+                              part="OPListOfAccountQueryOutput"
+                              query="/ns10:ListOfIsgsfaccountio"/>
+                  </bpelx:append>
+                </assign>
+                <assign name="SetQueryPageReturnStatus">
+                  <copy>
+                    <from expression="'Success'"/>
+                    <to variable="outputVariable" part="Headerresponse"
+                        query="/client:AccountWSEndPointSiebelProcessResponse/client:Status"/>
+                  </copy>
+                </assign>
+              </sequence>
+            </case>
+            
+            
+        
+            
+            
+            <otherwise>
+              <empty name="Empty5"/>
+            </otherwise>
+          </switch>
+        </scope>
+        <switch name="Switch_CheckOutput">
+          <case condition="(contains(xp20:upper-case(string(bpws:getVariableData('outputVariable','Headerresponse','/client:AccountWSEndPointSiebelProcessResponse/client:ErrMsg'))),'INBOUND SOAP MESSAGE - SESSION TOKEN IS MISSING OR INVALID OR HAS EXPIRED') = boolean(1)) or (contains(xp20:upper-case(string(bpws:getVariableData('outputVariable','Headerresponse','/client:AccountWSEndPointSiebelProcessResponse/client:ErrMsg'))),'ERROR CODE: 10944657 ERROR MESSAGE: ERROR: SESSION TIMED OUT.') = boolean(1)) or (contains(xp20:upper-case(string(bpws:getVariableData('outputVariable','Headerresponse','/client:AccountWSEndPointSiebelProcessResponse/client:ErrMsg'))),'ERROR CODE: 11338608 ERROR MESSAGE: ERROR: INVALID SESSION TOKEN') = boolean(1)) or (bpws:getVariableData('strSiebelSession') = '' or contains(xp20:upper-case(string(bpws:getVariableData('outputVariable','Headerresponse','/client:AccountWSEndPointSiebelProcessResponse/client:ErrMsg'))),'HTTP TRANSPORT ERROR: JAVAX.XML.SOAP.SOAPEXCEPTION: JAVA.SECURITY.PRIVILEGEDACTIONEXCEPTION:') = boolean(1))">
+    <!--  <case condition="(contains(xp20:upper-case(string(bpws:getVariableData('outputVariable','ErrMsg'))),'INBOUND SOAP MESSAGE - SESSION TOKEN IS MISSING OR INVALID OR HAS EXPIRED') = boolean(1)) or (contains(xp20:upper-case(string(bpws:getVariableData('outputVariable','ErrMsg'))),'ERROR CODE: 10944657 ERROR MESSAGE: ERROR: SESSION TIMED OUT.') = boolean(1)) or (bpws:getVariableData('strOPSessionToken') = '')"> -->
+            <!--<case condition="contains(xp20:upper-case(string(bpws:getVariableData('outputVariable','ErrMsg'))),'INBOUND SOAP MESSAGE - SESSION TOKEN IS MISSING OR INVALID OR HAS EXPIRED') = boolean(1)">-->
+            <bpelx:annotation>
+              <bpelx:pattern>SessionToken Expired</bpelx:pattern>
+            </bpelx:annotation>
+           <sequence name="Sequence_5">
+              <switch name="Switch_MaxSessionLoopCount">
+                <case condition="bpws:getVariableData('iSessLoopCount') &lt; 3">
+                  <bpelx:annotation>
+                    <bpelx:pattern>Loop until Max Retry</bpelx:pattern>
+                  </bpelx:annotation>
+                  <sequence name="Sequence_8">
+                    <assign name="ResetError">
+                      <copy>
+                        <from expression="''"/>
+                         <to variable="outputVariable" part="Headerresponse" query="/client:AccountWSEndPointSiebelProcessResponse/client:ErrMsg"/>
+                      </copy>
+                    </assign>
+                  <!-- siva   <scope name="Scope_2">
+                      <faultHandlers>
+                        <catchAll>
+                          <empty name="Empty_2"/>
+                        </catchAll>
+                      </faultHandlers>
+                     <bpelx:exec name="ResetExpiredSessionToken" language="java" version="1.5">
+                        <![CDATA[oracle.apps.siebel.sessionpool.SessionPool objSessionPool = new oracle.apps.siebel.sessionpool.SessionPool();          
+if (objSessionPool != null)              
+{          
+   String sODHostId      = (String) getVariableData ("strODHostId");       
+   String strExpToken    = (String) getVariableData ("strOPSessionToken");       
+   String strNewToken    = objSessionPool.ResetSessionId (strExpToken);  
+   setVariableData("strOPSessionToken",new String(strNewToken));  
+}]]>
+                      </bpelx:exec> 
+                    </scope> -->
+                    
+                     <scope name="Scope_2">
+                      <faultHandlers>
+                        <catchAll>
+                          <empty name="Empty_2"/>
+                        </catchAll>
+                      </faultHandlers>
+                      <bpelx:exec name="ResetSiebelSession" language="java" version="1.4">
+                        <![CDATA[oracle.apps.siebel.sessionpool.SessionPool objSessionPool = new oracle.apps.siebel.sessionpool.SessionPool();               
+if (objSessionPool != null)                   
+{               
+   String sODHostId      = (String) getVariableData ("strODHostID");            
+   String strExpToken    = (String) getVariableData ("strSiebelSession");            
+   String strNewToken    = objSessionPool.ResetSessionId (strExpToken);       
+   setVariableData("strSiebelSession",new String(strNewToken));       
+}]]>
+                      </bpelx:exec>
+                    </scope>
+                    
+                  </sequence>
+                </case>
+                <otherwise>
+                  <assign name="ResetSessionLoop">
+                    <copy>
+                      <from expression="boolean(1)"/>
+                      <to variable="bStopLooping"/>
+                    </copy>
+                  </assign>
+                </otherwise>
+              </switch>
+              <assign name="IncrementCount">
+                <copy>
+                  <from expression="bpws:getVariableData('iSessLoopCount') + 1"/>
+                  <to variable="iSessLoopCount"/>
+                </copy>
+              </assign>
+            </sequence>
+          </case>
+          <otherwise>
+            <sequence name="Sequence_7">
+           <!--   <bpelx:exec name="ReleaseSessionToken" language="java" version="1.5">
+                <![CDATA[oracle.apps.siebel.sessionpool.SessionPool objSessionPool = new oracle.apps.siebel.sessionpool.SessionPool();        
+if (objSessionPool != null)            
+{        
+   String sODHostId      = (String) getVariableData ("strODHostId");     
+   String strExpToken    = (String) getVariableData ("strOPSessionToken");     
+   objSessionPool.ReleaseSession (sODHostId, strExpToken);               
+}]]>
+              </bpelx:exec> -->
+              
+               <bpelx:exec name="ReleaseSession" language="java" version="1.4">
+                <![CDATA[oracle.apps.siebel.sessionpool.SessionPool objSessionPool = new oracle.apps.siebel.sessionpool.SessionPool();          
+  if (objSessionPool != null)              
+  {          
+      String sODHostId      = (String) getVariableData ("strODHostID");         
+      String strSessToken   = (String) getVariableData("strSiebelSession");    
+      objSessionPool.ReleaseSession(sODHostId,strSessToken);    
+  }]]>
+              </bpelx:exec>
+              
+              <assign name="ResetSessionLoop">
+                <copy>
+                  <from expression="boolean(1)"/>
+                  <to variable="bStopLooping"/>
+                </copy>
+              </assign>
+            </sequence>
+          </otherwise>
+        </switch>
+      </sequence>
+    </while>
+    <reply name="replyOutput" partnerLink="client" portType="client:AccountWSEndPointSiebel" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

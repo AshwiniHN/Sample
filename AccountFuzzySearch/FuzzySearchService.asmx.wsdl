@@ -1,0 +1,1118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions
+    
+     targetNamespace="http://mcafee.com/si/webservices/"
+     xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+     xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+     xmlns:s="http://www.w3.org/2001/XMLSchema"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:tns="http://mcafee.com/si/webservices/"
+     xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+    >
+    <wsdl:types>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://mcafee.com/si/webservices/">
+            <s:element name="SearchForAccount">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="searchForAccountRequest" type="tns:SearchForAccountRequest"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="SearchForAccountRequest">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address1" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address2" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address3" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="StateProvinceCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="StateProvinceName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="Score" type="s:int"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="search_country_map" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="SearchType" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="SearchForAccountResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchForAccountResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountWithAccountGroup">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="OriginalAddressSearchParts" type="tns:OriginalAddressSearchPartsStructure"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="OriginalAddressSearchPartsStructure">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address1" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address2" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address3" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="StateProvinceCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="StateProvinceName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="AccountGroup" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="Score" type="s:int"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="search_country_map" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="SearchType" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="SearchForAccountWithAccountGroupResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchForAccountWithAccountGroupResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountPDHSiebelBestMatch">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="searchForAccountRequest" type="tns:SearchForAccountRequest"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountPDHSiebelBestMatchResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchForAccountPDHSiebelBestMatchResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountWithGroupPDHSiebelBestMatch">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="OriginalAddressSearchParts" type="tns:OriginalAddressSearchPartsStructure"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountWithGroupPDHSiebelBestMatchResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchForAccountWithGroupPDHSiebelBestMatchResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountfrom_Golden">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="searchForAccountRequest_GoldenCopy"
+                             type="tns:SearchForAccountRequest_XREF_GoldenCopy"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="SearchForAccountRequest_XREF_GoldenCopy">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address1" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address2" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address3" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="StateProvinceCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="StateProvinceName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="Score" type="s:int"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Ucn" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Source" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="RecordCountThresold" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="SearchType" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="SearchForAccountfrom_GoldenResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchForAccountfrom_GoldenResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountWithAccountGroupfrom_Golden">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="OriginalAddressSearchParts_GoldenCopy"
+                             type="tns:OriginalAddressSearchPartsStructure_XREF_GoldenCopy"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="OriginalAddressSearchPartsStructure_XREF_GoldenCopy">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address1" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address2" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address3" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="StateProvinceCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="StateProvinceName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="AccountGroup" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="Score" type="s:int"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Source" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Ucn" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="RecordCountThresold" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="SearchType" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="SearchForAccountWithAccountGroupfrom_GoldenResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchForAccountWithAccountGroupfrom_GoldenResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountBestMatch_Golden">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="searchForAccountRequest_GoldenCopy"
+                             type="tns:SearchForAccountRequest_XREF_GoldenCopy"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountBestMatch_GoldenResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchForAccountBestMatch_GoldenResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountWithGroupBestMatch_Golden">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="OriginalAddressSearchParts_GoldenCopy"
+                             type="tns:OriginalAddressSearchPartsStructure_XREF_GoldenCopy"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountWithGroupBestMatch_GoldenResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchForAccountWithGroupBestMatch_GoldenResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountfrom_XREF">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="searchForAccountRequest_XREF" type="tns:SearchForAccountRequest_XREF_GoldenCopy"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountfrom_XREFResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchForAccountfrom_XREFResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountWithAccountGroupfrom_XREF">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="OriginalAddressSearchParts_XREF"
+                             type="tns:OriginalAddressSearchPartsStructure_XREF_GoldenCopy"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountWithAccountGroupfrom_XREFResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchForAccountWithAccountGroupfrom_XREFResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountBestMatch_XREF">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="searchForAccountRequest_XREF" type="tns:SearchForAccountRequest_XREF_GoldenCopy"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountBestMatch_XREFResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchForAccountBestMatch_XREFResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountWithGroupBestMatch_XREF">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="OriginalAddressSearchParts_XREF"
+                             type="tns:OriginalAddressSearchPartsStructure_XREF_GoldenCopy"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountWithGroupBestMatch_XREFResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchForAccountWithGroupBestMatch_XREFResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchforAccountwithPartyType">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="OriginalAddressSearchParts_PartyType"
+                             type="tns:SearchForPartyTypeRequest"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="SearchForPartyTypeRequest">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address1" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address2" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address3" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="StateProvinceCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="StateProvinceName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="AccountGroup" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="Score" type="s:int"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="search_country_map" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="SearchType" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="PartyType" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="SearchforAccountwithPartyTypeResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchforAccountwithPartyTypeResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchforAccountwithPartyTypeBestMatchfrom_Golden">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="OriginalAddressSearchParts_GoldenCopy_PartyType"
+                             type="tns:SearchForPartyTypeRequest_XREF_GoldenCopy"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="SearchForPartyTypeRequest_XREF_GoldenCopy">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address1" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address2" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Address3" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="StateProvinceCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="StateProvinceName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="AccountGroup" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="Score" type="s:int"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Source" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Ucn" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="RecordCountThresold" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="SearchType" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="PartyType" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="SearchforAccountwithPartyTypeBestMatchfrom_GoldenResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchforAccountwithPartyTypeBestMatchfrom_GoldenResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchforAccountwithPartyTypeBestMatchfrom_XREF">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="OriginalAddressSearchParts_XREF_PartyType"
+                             type="tns:SearchForPartyTypeRequest_XREF_GoldenCopy"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchforAccountwithPartyTypeBestMatchfrom_XREFResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchforAccountwithPartyTypeBestMatchfrom_XREFResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchforAccountwithPartyTypefrom_Golden">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="OriginalAddressSearchParts_GoldenCopy_PartyType"
+                             type="tns:SearchForPartyTypeRequest_XREF_GoldenCopy"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchforAccountwithPartyTypefrom_GoldenResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchforAccountwithPartyTypefrom_GoldenResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchforAccountwithPartyTypefrom_XREF">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="OriginalAddressSearchParts_XREF_PartyType"
+                             type="tns:SearchForPartyTypeRequest_XREF_GoldenCopy"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchforAccountwithPartyTypefrom_XREFResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchforAccountwithPartyTypefrom_XREFResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchforAccountwithPartyTypeBestMatch">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="OriginalAddressSearchParts_PartyType"
+                             type="tns:SearchForPartyTypeRequest"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchforAccountwithPartyTypeBestMatchResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchforAccountwithPartyTypeBestMatchResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SearchForAccountById">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="searchSiebelIDForAccountByIdRequest"
+                             type="tns:SearchForAccountByIdRequest"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="SearchForAccountByIdRequest">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="SourceValue" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="SourceSystem" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="SearchForAccountByIdResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SearchForAccountByIdResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+        </s:schema>
+    </wsdl:types>
+    <wsdl:message name="SearchForAccountSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchForAccount"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchForAccountResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountWithAccountGroupSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchForAccountWithAccountGroup"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountWithAccountGroupSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchForAccountWithAccountGroupResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountPDHSiebelBestMatchSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchForAccountPDHSiebelBestMatch"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountPDHSiebelBestMatchSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchForAccountPDHSiebelBestMatchResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountWithGroupPDHSiebelBestMatchSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchForAccountWithGroupPDHSiebelBestMatch"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountWithGroupPDHSiebelBestMatchSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchForAccountWithGroupPDHSiebelBestMatchResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountfrom_GoldenSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchForAccountfrom_Golden"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountfrom_GoldenSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchForAccountfrom_GoldenResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountWithAccountGroupfrom_GoldenSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchForAccountWithAccountGroupfrom_Golden"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountWithAccountGroupfrom_GoldenSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchForAccountWithAccountGroupfrom_GoldenResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountBestMatch_GoldenSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchForAccountBestMatch_Golden"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountBestMatch_GoldenSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchForAccountBestMatch_GoldenResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountWithGroupBestMatch_GoldenSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchForAccountWithGroupBestMatch_Golden"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountWithGroupBestMatch_GoldenSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchForAccountWithGroupBestMatch_GoldenResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountfrom_XREFSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchForAccountfrom_XREF"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountfrom_XREFSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchForAccountfrom_XREFResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountWithAccountGroupfrom_XREFSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchForAccountWithAccountGroupfrom_XREF"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountWithAccountGroupfrom_XREFSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchForAccountWithAccountGroupfrom_XREFResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountBestMatch_XREFSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchForAccountBestMatch_XREF"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountBestMatch_XREFSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchForAccountBestMatch_XREFResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountWithGroupBestMatch_XREFSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchForAccountWithGroupBestMatch_XREF"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountWithGroupBestMatch_XREFSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchForAccountWithGroupBestMatch_XREFResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchforAccountwithPartyTypeSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchforAccountwithPartyType"/>
+    </wsdl:message>
+    <wsdl:message name="SearchforAccountwithPartyTypeSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchforAccountwithPartyTypeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchforAccountwithPartyTypeBestMatchfrom_GoldenSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchforAccountwithPartyTypeBestMatchfrom_Golden"/>
+    </wsdl:message>
+    <wsdl:message name="SearchforAccountwithPartyTypeBestMatchfrom_GoldenSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchforAccountwithPartyTypeBestMatchfrom_GoldenResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchforAccountwithPartyTypeBestMatchfrom_XREFSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchforAccountwithPartyTypeBestMatchfrom_XREF"/>
+    </wsdl:message>
+    <wsdl:message name="SearchforAccountwithPartyTypeBestMatchfrom_XREFSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchforAccountwithPartyTypeBestMatchfrom_XREFResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchforAccountwithPartyTypefrom_GoldenSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchforAccountwithPartyTypefrom_Golden"/>
+    </wsdl:message>
+    <wsdl:message name="SearchforAccountwithPartyTypefrom_GoldenSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchforAccountwithPartyTypefrom_GoldenResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchforAccountwithPartyTypefrom_XREFSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchforAccountwithPartyTypefrom_XREF"/>
+    </wsdl:message>
+    <wsdl:message name="SearchforAccountwithPartyTypefrom_XREFSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchforAccountwithPartyTypefrom_XREFResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchforAccountwithPartyTypeBestMatchSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchforAccountwithPartyTypeBestMatch"/>
+    </wsdl:message>
+    <wsdl:message name="SearchforAccountwithPartyTypeBestMatchSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchforAccountwithPartyTypeBestMatchResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountByIdSoapIn">
+        <wsdl:part name="parameters" element="tns:SearchForAccountById"/>
+    </wsdl:message>
+    <wsdl:message name="SearchForAccountByIdSoapOut">
+        <wsdl:part name="parameters" element="tns:SearchForAccountByIdResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="FuzzyServiceSoap">
+        <wsdl:operation name="SearchForAccount">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM.This function will be exclusively used by SOA/POST/SAP/MX Logic.</wsdl:documentation>
+            <wsdl:input message="tns:SearchForAccountSoapIn"/>
+            <wsdl:output message="tns:SearchForAccountSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithAccountGroup">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM. Account Group parameter should not be blank. This function will be exclusively used by SOA/POST/SAP/MX Logic.</wsdl:documentation>
+            <wsdl:input message="tns:SearchForAccountWithAccountGroupSoapIn"/>
+            <wsdl:output message="tns:SearchForAccountWithAccountGroupSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountPDHSiebelBestMatch">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM. This method is for SMB/DR.</wsdl:documentation>
+            <wsdl:input message="tns:SearchForAccountPDHSiebelBestMatchSoapIn"/>
+            <wsdl:output message="tns:SearchForAccountPDHSiebelBestMatchSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithGroupPDHSiebelBestMatch">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM based on group. This method is for SMB/DR.</wsdl:documentation>
+            <wsdl:input message="tns:SearchForAccountWithGroupPDHSiebelBestMatchSoapIn"/>
+            <wsdl:output message="tns:SearchForAccountWithGroupPDHSiebelBestMatchSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountfrom_Golden">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM GoldenCopy.</wsdl:documentation>
+            <wsdl:input message="tns:SearchForAccountfrom_GoldenSoapIn"/>
+            <wsdl:output message="tns:SearchForAccountfrom_GoldenSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithAccountGroupfrom_Golden">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM GoldenCopy based on account group.</wsdl:documentation>
+            <wsdl:input message="tns:SearchForAccountWithAccountGroupfrom_GoldenSoapIn"/>
+            <wsdl:output message="tns:SearchForAccountWithAccountGroupfrom_GoldenSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountBestMatch_Golden">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets best matching accounts from MDM GoldenCopy.</wsdl:documentation>
+            <wsdl:input message="tns:SearchForAccountBestMatch_GoldenSoapIn"/>
+            <wsdl:output message="tns:SearchForAccountBestMatch_GoldenSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithGroupBestMatch_Golden">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM GoldenCopy based on account group.</wsdl:documentation>
+            <wsdl:input message="tns:SearchForAccountWithGroupBestMatch_GoldenSoapIn"/>
+            <wsdl:output message="tns:SearchForAccountWithGroupBestMatch_GoldenSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountfrom_XREF">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM.This function will be exclusively used by SOA/POST/SAP/MX Logic.</wsdl:documentation>
+            <wsdl:input message="tns:SearchForAccountfrom_XREFSoapIn"/>
+            <wsdl:output message="tns:SearchForAccountfrom_XREFSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithAccountGroupfrom_XREF">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM. Account Group parameter should not be blank. This function will be exclusively used by SOA/POST/SAP/MX Logic.</wsdl:documentation>
+            <wsdl:input message="tns:SearchForAccountWithAccountGroupfrom_XREFSoapIn"/>
+            <wsdl:output message="tns:SearchForAccountWithAccountGroupfrom_XREFSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountBestMatch_XREF">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM. This method is for SMB/DR.</wsdl:documentation>
+            <wsdl:input message="tns:SearchForAccountBestMatch_XREFSoapIn"/>
+            <wsdl:output message="tns:SearchForAccountBestMatch_XREFSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithGroupBestMatch_XREF">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM based on group. This method is for SMB/DR.</wsdl:documentation>
+            <wsdl:input message="tns:SearchForAccountWithGroupBestMatch_XREFSoapIn"/>
+            <wsdl:output message="tns:SearchForAccountWithGroupBestMatch_XREFSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyType">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM. Party Type parameter should not be blank.</wsdl:documentation>
+            <wsdl:input message="tns:SearchforAccountwithPartyTypeSoapIn"/>
+            <wsdl:output message="tns:SearchforAccountwithPartyTypeSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyTypeBestMatchfrom_Golden">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM GoldenCopy based on Party Type.</wsdl:documentation>
+            <wsdl:input message="tns:SearchforAccountwithPartyTypeBestMatchfrom_GoldenSoapIn"/>
+            <wsdl:output message="tns:SearchforAccountwithPartyTypeBestMatchfrom_GoldenSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyTypeBestMatchfrom_XREF">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM based on party type.</wsdl:documentation>
+            <wsdl:input message="tns:SearchforAccountwithPartyTypeBestMatchfrom_XREFSoapIn"/>
+            <wsdl:output message="tns:SearchforAccountwithPartyTypeBestMatchfrom_XREFSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyTypefrom_Golden">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM GoldenCopy based on party type.</wsdl:documentation>
+            <wsdl:input message="tns:SearchforAccountwithPartyTypefrom_GoldenSoapIn"/>
+            <wsdl:output message="tns:SearchforAccountwithPartyTypefrom_GoldenSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyTypefrom_XREF">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM. Party Type parameter should not be blank.</wsdl:documentation>
+            <wsdl:input message="tns:SearchforAccountwithPartyTypefrom_XREFSoapIn"/>
+            <wsdl:output message="tns:SearchforAccountwithPartyTypefrom_XREFSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyTypeBestMatch">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets matching accounts from MDM based on party type.</wsdl:documentation>
+            <wsdl:input message="tns:SearchforAccountwithPartyTypeBestMatchSoapIn"/>
+            <wsdl:output message="tns:SearchforAccountwithPartyTypeBestMatchSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountById">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get ParentSiebelID and Global UCN value .</wsdl:documentation>
+            <wsdl:input message="tns:SearchForAccountByIdSoapIn"/>
+            <wsdl:output message="tns:SearchForAccountByIdSoapOut"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="FuzzyServiceSoap" type="tns:FuzzyServiceSoap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="SearchForAccount">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccount"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithAccountGroup">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountWithAccountGroup"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountPDHSiebelBestMatch">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountPDHSiebelBestMatch"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithGroupPDHSiebelBestMatch">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountWithGroupPDHSiebelBestMatch"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountfrom_Golden">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountfrom_Golden"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithAccountGroupfrom_Golden">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountWithAccountGroupfrom_Golden"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountBestMatch_Golden">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountBestMatch_Golden"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithGroupBestMatch_Golden">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountWithGroupBestMatch_Golden"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountfrom_XREF">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountfrom_XREF"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithAccountGroupfrom_XREF">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountWithAccountGroupfrom_XREF"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountBestMatch_XREF">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountBestMatch_XREF"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithGroupBestMatch_XREF">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountWithGroupBestMatch_XREF"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyType">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchforAccountwithPartyType"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyTypeBestMatchfrom_Golden">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchforAccountwithPartyTypeBestMatchfrom_Golden"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyTypeBestMatchfrom_XREF">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchforAccountwithPartyTypeBestMatchfrom_XREF"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyTypefrom_Golden">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchforAccountwithPartyTypefrom_Golden"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyTypefrom_XREF">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchforAccountwithPartyTypefrom_XREF"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyTypeBestMatch">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchforAccountwithPartyTypeBestMatch"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountById">
+            <soap:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountById"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="FuzzyServiceSoap12" type="tns:FuzzyServiceSoap">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="SearchForAccount">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccount"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithAccountGroup">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountWithAccountGroup"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountPDHSiebelBestMatch">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountPDHSiebelBestMatch"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithGroupPDHSiebelBestMatch">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountWithGroupPDHSiebelBestMatch"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountfrom_Golden">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountfrom_Golden"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithAccountGroupfrom_Golden">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountWithAccountGroupfrom_Golden"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountBestMatch_Golden">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountBestMatch_Golden"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithGroupBestMatch_Golden">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountWithGroupBestMatch_Golden"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountfrom_XREF">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountfrom_XREF"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithAccountGroupfrom_XREF">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountWithAccountGroupfrom_XREF"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountBestMatch_XREF">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountBestMatch_XREF"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountWithGroupBestMatch_XREF">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountWithGroupBestMatch_XREF"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyType">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchforAccountwithPartyType"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyTypeBestMatchfrom_Golden">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchforAccountwithPartyTypeBestMatchfrom_Golden"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyTypeBestMatchfrom_XREF">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchforAccountwithPartyTypeBestMatchfrom_XREF"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyTypefrom_Golden">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchforAccountwithPartyTypefrom_Golden"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyTypefrom_XREF">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchforAccountwithPartyTypefrom_XREF"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchforAccountwithPartyTypeBestMatch">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchforAccountwithPartyTypeBestMatch"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SearchForAccountById">
+            <soap12:operation style="document" soapAction="http://mcafee.com/si/webservices/SearchForAccountById"
+                 soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="FuzzyService">
+        <wsdl:port name="FuzzyServiceSoap" binding="tns:FuzzyServiceSoap">
+            <soap:address location="http://comws1qa.corp.nai.org/FuzzySearchWS/FuzzySearchService.asmx"/>
+        </wsdl:port>
+        <wsdl:port name="FuzzyServiceSoap12" binding="tns:FuzzyServiceSoap12">
+            <soap12:address location="http://comws1qa.corp.nai.org/FuzzySearchWS/FuzzySearchService.asmx"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
