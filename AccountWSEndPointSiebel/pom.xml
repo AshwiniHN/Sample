@@ -88,5 +88,8 @@
                 <extensions>true</extensions>
             </plugin>
         </plugins>
+        <sourceDirectory>SCA-INF/src/</sourceDirectory>
+        <resources/>
+        <outputDirectory>SCA-INF/classes/</outputDirectory>
     </build>
 </project>
