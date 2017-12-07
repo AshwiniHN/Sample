@@ -81,7 +81,7 @@
                     <scacInputDir>${scac.input.dir}</scacInputDir>
                     <!-- Uncomment the appHome property if your composite 
                          depends on MDS. -->
-                    <appHome>${project.basedir}/..</appHome> 
+                    <appHome>../</appHome> 
                     <input>${input}</input> 
                 </configuration>
                  <!-- extensions=true is needed to use the custom sar packaging type -->
