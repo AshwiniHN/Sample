@@ -17,8 +17,8 @@
         <metadata-store-usages>
           <metadata-store-usage id="mstore-usage_apps">
             <metadata-store class-name="oracle.mds.persistence.stores.file.FileMetadataStore">
-              <!--<property name="metadata-path" value="${soamds.apps.home}"/> -->
-                  <property name="metadata-path" value="../../MDS/DEV"/>
+              <property name="metadata-path" value="${soamds.apps.home}"/> 
+               <!--   <property name="metadata-path" value="../../MDS/DEV"/> -->
             </metadata-store>
           </metadata-store-usage>
         </metadata-store-usages>
